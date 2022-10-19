@@ -1,9 +1,11 @@
 package com.sinem.mapper;
 
+import com.sinem.dto.NewCreateUserDto;
+import com.sinem.dto.request.ActivateRequestDto;
 import com.sinem.dto.request.LoginRequestDto;
 import com.sinem.dto.request.RegisterRequestDto;
 import com.sinem.dto.response.LoginResponseDto;
-import com.sinem.repository.IAuthRepository;
+import com.sinem.dto.response.RegisterResponseDto;
 import com.sinem.repository.entity.Auth;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -22,5 +24,11 @@ public interface IAuthMapper {
     LoginResponseDto toLoginResponseDto(final Auth auth);
     Auth toAuth(final LoginResponseDto dto);
 
+    RegisterResponseDto toRegisterResponseDto(final Auth auth);
+    Auth toAuth(final RegisterResponseDto dto);
+
+    ActivateRequestDto toActivetedRequestDto(final Auth auth);
+    NewCreateUserDto toNewCreateUserDto(final Auth auth);
+    Auth toAuth(final NewCreateUserDto dto);
 
 }

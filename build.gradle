@@ -51,6 +51,7 @@ allprojects{
         annotationProcessor libs.lombokMapstructBinding
         implementation libs.springBootValidation
         implementation libs.swaggerui
+        implementation libs.springOpenFeign
 
     }
 }

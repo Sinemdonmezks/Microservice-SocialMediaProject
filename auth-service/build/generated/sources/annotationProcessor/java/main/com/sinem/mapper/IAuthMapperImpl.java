@@ -1,15 +1,18 @@
 package com.sinem.mapper;
 
+import com.sinem.dto.NewCreateUserDto;
+import com.sinem.dto.request.ActivateRequestDto;
 import com.sinem.dto.request.LoginRequestDto;
 import com.sinem.dto.request.RegisterRequestDto;
 import com.sinem.dto.response.LoginResponseDto;
+import com.sinem.dto.response.RegisterResponseDto;
 import com.sinem.repository.entity.Auth;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-10-18T17:17:19+0300",
+    date = "2022-10-19T17:13:11+0300",
     comments = "version: 1.5.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.4.1 (Eclipse Adoptium)"
 )
 @Component
@@ -101,6 +104,76 @@ public class IAuthMapperImpl implements IAuthMapper {
         auth.namesurname( dto.getNamesurname() );
         auth.email( dto.getEmail() );
         auth.role( dto.getRole() );
+
+        return auth.build();
+    }
+
+    @Override
+    public RegisterResponseDto toRegisterResponseDto(Auth auth) {
+        if ( auth == null ) {
+            return null;
+        }
+
+        RegisterResponseDto.RegisterResponseDtoBuilder registerResponseDto = RegisterResponseDto.builder();
+
+        registerResponseDto.id( auth.getId() );
+        registerResponseDto.namesurname( auth.getNamesurname() );
+        registerResponseDto.activatedCode( auth.getActivatedCode() );
+
+        return registerResponseDto.build();
+    }
+
+    @Override
+    public Auth toAuth(RegisterResponseDto dto) {
+        if ( dto == null ) {
+            return null;
+        }
+
+        Auth.AuthBuilder auth = Auth.builder();
+
+        auth.id( dto.getId() );
+        auth.namesurname( dto.getNamesurname() );
+        auth.activatedCode( dto.getActivatedCode() );
+
+        return auth.build();
+    }
+
+    @Override
+    public ActivateRequestDto toActivetedRequestDto(Auth auth) {
+        if ( auth == null ) {
+            return null;
+        }
+
+        ActivateRequestDto.ActivateRequestDtoBuilder activateRequestDto = ActivateRequestDto.builder();
+
+        activateRequestDto.id( auth.getId() );
+        activateRequestDto.activatedCode( auth.getActivatedCode() );
+
+        return activateRequestDto.build();
+    }
+
+    @Override
+    public NewCreateUserDto toNewCreateUserDto(Auth auth) {
+        if ( auth == null ) {
+            return null;
+        }
+
+        NewCreateUserDto.NewCreateUserDtoBuilder newCreateUserDto = NewCreateUserDto.builder();
+
+        newCreateUserDto.email( auth.getEmail() );
+
+        return newCreateUserDto.build();
+    }
+
+    @Override
+    public Auth toAuth(NewCreateUserDto dto) {
+        if ( dto == null ) {
+            return null;
+        }
+
+        Auth.AuthBuilder auth = Auth.builder();
+
+        auth.email( dto.getEmail() );
 
         return auth.build();
     }

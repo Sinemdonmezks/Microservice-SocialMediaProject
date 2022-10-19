@@ -1,8 +1,10 @@
 package com.sinem.controller;
 
+import com.sinem.dto.request.ActivateRequestDto;
 import com.sinem.dto.request.LoginRequestDto;
 import com.sinem.dto.request.RegisterRequestDto;
 import com.sinem.dto.response.LoginResponseDto;
+import com.sinem.dto.response.RegisterResponseDto;
 import com.sinem.repository.entity.Auth;
 import com.sinem.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,7 +23,7 @@ public class AuthController {
 
     @PostMapping ("/register")
     @Operation(summary = "Kullanıcı kaydeden method")
-    public ResponseEntity<Auth> register(@RequestBody @Valid RegisterRequestDto dto){
+    public ResponseEntity<RegisterResponseDto> register(@RequestBody @Valid RegisterRequestDto dto){
         return ResponseEntity.ok(authService.register(dto));
     }
     @PostMapping ("/login")
@@ -29,4 +31,9 @@ public class AuthController {
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto dto){
         return ResponseEntity.ok(authService.login(dto).get());
     }
+@PostMapping("/activate")
+public ResponseEntity<Boolean> activateStatus(@RequestBody ActivateRequestDto dto){
+       return ResponseEntity.ok(authService.activateStatus(dto));
+
+}
 }

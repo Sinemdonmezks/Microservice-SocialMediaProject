@@ -22,6 +22,10 @@ ext{
             springOpenFeign            : "org.springframework.cloud:spring-cloud-starter-openfeign:$versions.springCloud",
             swaggerui               : "org.springdoc:springdoc-openapi-ui:$versions.swagger",
             auth0                   : "com.auth0:java-jwt:$versions.auth0",
+            // Spring Config Server için gerekli bağımlılıklar
+            springCloudStarterConfig: "org.springframework.cloud:spring-cloud-starter-config:$versions.springCloud",
+            springCloudConfigServer : "org.springframework.cloud:spring-cloud-config-server:$versions.springCloud",
+            springCloudConfigClient : "org.springframework.cloud:spring-cloud-config-client:$versions.springCloud",
 
     ]
 }

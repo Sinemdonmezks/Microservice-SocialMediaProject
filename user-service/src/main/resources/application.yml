@@ -1,19 +1,8 @@
-server:
-  port: 8091
-
 spring:
-  datasource:
-    username: 'postgres'
-    password: 'root'
-    url: 'jdbc:postgresql://localhost:5432/socialmediauserDB'
-    driver-class-name: org.postgresql.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-
-myjwt:
-  secretkey: ${secretkey}
-  audience: ${audience}
-  issuer: ${issuer}
+  cloud:
+    config:
+      uri: http://localhost:8888
+  config:
+    import: "configserver:"
+  application:
+    name: user-service-application

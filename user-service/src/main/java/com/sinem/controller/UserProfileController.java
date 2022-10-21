@@ -38,6 +38,18 @@ try{
 
         }
     }
+
+    @PostMapping("/activate/{authid}")
+    public ResponseEntity<Boolean> activetedStatus(@PathVariable Long authid){
+        try {
+            userProfileService.activatedStatus(authid);
+            return ResponseEntity.ok(true);
+        }catch (Exception e){
+            throw  new UserServiceException(ErrorType.INVALID_ACTIVATE_CODE);
+
+        }
+    }
+
     @PutMapping("/update")
 
     public ResponseEntity<Boolean> updateProfile(@RequestBody @Valid UpdateRequestDto dto){

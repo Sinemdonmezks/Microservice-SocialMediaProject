@@ -5,6 +5,7 @@ import com.sinem.dto.NewCreateUserDto;
 import com.sinem.dto.request.ActivateRequestDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -18,5 +19,9 @@ public interface IUserManager {
 
     @PostMapping("/activate")
     public ResponseEntity<Boolean> activetedUser(@RequestBody ActivateRequestDto dto);
-    }
 
+
+    @PostMapping("/activate/{authid}")
+    public ResponseEntity<Boolean> activetedStatus(@PathVariable Long authid);
+
+}

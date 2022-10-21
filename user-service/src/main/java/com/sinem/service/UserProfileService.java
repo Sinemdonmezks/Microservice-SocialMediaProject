@@ -41,6 +41,17 @@ public class UserProfileService extends ServiceManager<UserProfile,Long> {
         }
     }
 
+    public boolean activatedStatus(Long authid) {
+        Optional<UserProfile> userProfile = userProfileRepository.findOptionalByAuthid(authid);
+        if(userProfile.isPresent()){
+            userProfile.get().setStatus(Status.ACTIVE);
+            save(userProfile.get());
+            return true;
+        }else{
+            throw new UserServiceException(ErrorType.USER_NOT_FOUND);
+        }
+    }
+
     public boolean updateUser(UpdateRequestDto dto) {
         Optional<Long> authid=tokenManager.getByIdFromToken(dto.getToken());
         UserProfile userProfile=IUserMapper.INSTANCE.toUserProfile(dto);

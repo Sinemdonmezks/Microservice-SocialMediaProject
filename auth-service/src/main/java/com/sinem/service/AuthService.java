@@ -83,7 +83,8 @@ public class AuthService extends ServiceManager<Auth,Long> {
         }
         if (auth.get().getActivatedCode().equals(dto.getActivatedCode())){
             auth.get().setStatus(Status.ACTIVE);
-            userManager.activetedUser(dto);
+            userManager.activetedUser(dto.getId());//dto.getid dersek authidli metoda gider.
+                                                    //dto dersek dtolu metoda gider.
             save(auth.get());
             return true;
         }

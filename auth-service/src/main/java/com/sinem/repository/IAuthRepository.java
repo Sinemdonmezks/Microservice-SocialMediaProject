@@ -9,8 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface IAuthRepository extends JpaRepository<Auth,Long> {
-@Query("select count(a.namesurname)>0 from Auth as a where a.namesurname=?1")
-    Boolean existUsername(String namesurname);
+@Query("select count(a.username)>0 from Auth as a where a.username=?1")
+    Boolean existUsername(String username);
 
     Optional<Auth> findOptionalByEmailAndPassword(String email,String password);
 

@@ -1,16 +1,17 @@
 package com.sinem.controller;
 
+import com.sinem.dto.ActivateRequestDto;
 import com.sinem.dto.NewCreateUserDto;
-import com.sinem.exception.AuthServiceException;
+import com.sinem.dto.UpdateRequestDto;
+import com.sinem.exception.UserServiceException;
 import com.sinem.exception.ErrorType;
-import com.sinem.repository.entity.UserProfile;
 import com.sinem.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,8 +24,23 @@ try{
     userProfileService.createUser(dto);
     return ResponseEntity.ok(true);
 }catch (Exception e){
-    throw  new AuthServiceException(ErrorType.INVALID_ACTIVATE_CODE);
+    throw  new UserServiceException(ErrorType.INVALID_ACTIVATE_CODE);
 
 }
+    }
+    @PostMapping("/activate")
+    public ResponseEntity<Boolean> activetedUser(@RequestBody ActivateRequestDto dto){
+        try {
+            userProfileService.activatedUser(dto);
+            return ResponseEntity.ok(true);
+        }catch (Exception e){
+            throw  new UserServiceException(ErrorType.INVALID_ACTIVATE_CODE);
+
+        }
+    }
+    @PutMapping("/update")
+
+    public ResponseEntity<Boolean> updateProfile(@RequestBody @Valid UpdateRequestDto dto){
+        return ResponseEntity.ok(userProfileService.updateUser(dto));
     }
 }

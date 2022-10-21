@@ -20,7 +20,7 @@ public class Auth {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 16,nullable = false,unique = true)
-    private String namesurname;
+    private String username;
     private String password;
     private String email;
     @Enumerated(EnumType.STRING)

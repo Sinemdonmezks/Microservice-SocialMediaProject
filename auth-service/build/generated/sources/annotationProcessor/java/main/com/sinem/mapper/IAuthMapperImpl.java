@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-10-19T17:13:11+0300",
+    date = "2022-10-20T14:40:42+0300",
     comments = "version: 1.5.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.4.1 (Eclipse Adoptium)"
 )
 @Component
@@ -26,7 +26,7 @@ public class IAuthMapperImpl implements IAuthMapper {
 
         RegisterRequestDto.RegisterRequestDtoBuilder registerRequestDto = RegisterRequestDto.builder();
 
-        registerRequestDto.namesurname( auth.getNamesurname() );
+        registerRequestDto.username( auth.getUsername() );
         registerRequestDto.password( auth.getPassword() );
         registerRequestDto.email( auth.getEmail() );
 
@@ -41,7 +41,7 @@ public class IAuthMapperImpl implements IAuthMapper {
 
         Auth.AuthBuilder auth = Auth.builder();
 
-        auth.namesurname( dto.getNamesurname() );
+        auth.username( dto.getUsername() );
         auth.password( dto.getPassword() );
         auth.email( dto.getEmail() );
 
@@ -85,7 +85,7 @@ public class IAuthMapperImpl implements IAuthMapper {
         LoginResponseDto.LoginResponseDtoBuilder loginResponseDto = LoginResponseDto.builder();
 
         loginResponseDto.id( auth.getId() );
-        loginResponseDto.namesurname( auth.getNamesurname() );
+        loginResponseDto.username( auth.getUsername() );
         loginResponseDto.email( auth.getEmail() );
         loginResponseDto.role( auth.getRole() );
 
@@ -101,7 +101,7 @@ public class IAuthMapperImpl implements IAuthMapper {
         Auth.AuthBuilder auth = Auth.builder();
 
         auth.id( dto.getId() );
-        auth.namesurname( dto.getNamesurname() );
+        auth.username( dto.getUsername() );
         auth.email( dto.getEmail() );
         auth.role( dto.getRole() );
 
@@ -117,7 +117,7 @@ public class IAuthMapperImpl implements IAuthMapper {
         RegisterResponseDto.RegisterResponseDtoBuilder registerResponseDto = RegisterResponseDto.builder();
 
         registerResponseDto.id( auth.getId() );
-        registerResponseDto.namesurname( auth.getNamesurname() );
+        registerResponseDto.username( auth.getUsername() );
         registerResponseDto.activatedCode( auth.getActivatedCode() );
 
         return registerResponseDto.build();
@@ -132,7 +132,7 @@ public class IAuthMapperImpl implements IAuthMapper {
         Auth.AuthBuilder auth = Auth.builder();
 
         auth.id( dto.getId() );
-        auth.namesurname( dto.getNamesurname() );
+        auth.username( dto.getUsername() );
         auth.activatedCode( dto.getActivatedCode() );
 
         return auth.build();
@@ -160,6 +160,7 @@ public class IAuthMapperImpl implements IAuthMapper {
 
         NewCreateUserDto.NewCreateUserDtoBuilder newCreateUserDto = NewCreateUserDto.builder();
 
+        newCreateUserDto.username( auth.getUsername() );
         newCreateUserDto.email( auth.getEmail() );
 
         return newCreateUserDto.build();
@@ -173,6 +174,7 @@ public class IAuthMapperImpl implements IAuthMapper {
 
         Auth.AuthBuilder auth = Auth.builder();
 
+        auth.username( dto.getUsername() );
         auth.email( dto.getEmail() );
 
         return auth.build();

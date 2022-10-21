@@ -1,6 +1,8 @@
 package com.sinem.mapper;
 
+import com.sinem.dto.ActivateRequestDto;
 import com.sinem.dto.NewCreateUserDto;
+import com.sinem.dto.UpdateRequestDto;
 import com.sinem.repository.entity.UserProfile;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -11,4 +13,7 @@ public interface IUserMapper {
     IUserMapper INSTANCE= Mappers.getMapper(IUserMapper.class);
 
     UserProfile toUserProfile(final NewCreateUserDto toNewCreateUserDto);
+    UserProfile toUserProfile(final ActivateRequestDto dto);
+    UserProfile toUserProfile(final UpdateRequestDto dto);
+
 }

@@ -12,3 +12,9 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+#Jwt
+myjwt:
+  secretkey: ${secretkey}
+  audience:  ${audience}
+  issuer:     ${issuer}

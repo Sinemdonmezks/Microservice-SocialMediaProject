@@ -52,6 +52,7 @@ allprojects{
         implementation libs.springBootValidation
         implementation libs.swaggerui
         implementation libs.springOpenFeign
+        implementation libs.auth0
 
     }
 }

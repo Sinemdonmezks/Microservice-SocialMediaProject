@@ -36,9 +36,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(createError(errorType, exception), errorType.getHttpStatus());
     }
 
-    @ExceptionHandler(AuthServiceException.class)
+    @ExceptionHandler(UserServiceException.class)
     @ResponseBody
-    public ResponseEntity<ErrorMessage> handleMonolitichException(AuthServiceException ex){
+    public ResponseEntity<ErrorMessage> handleMonolitichException(UserServiceException ex){
         ErrorType errorType = ex.getErrorType();
         HttpStatus httpStatus = errorType.getHttpStatus();
         return new ResponseEntity(createError(errorType,ex),httpStatus);

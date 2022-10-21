@@ -15,6 +15,7 @@ import com.sinem.repository.entity.Auth;
 import com.sinem.repository.enums.Roles;
 import com.sinem.repository.enums.Status;
 import com.sinem.utility.CodeGenerator;
+import com.sinem.utility.JwtTokenManager;
 import com.sinem.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
@@ -26,16 +27,18 @@ public class AuthService extends ServiceManager<Auth,Long> {
 
     private final IAuthRepository authRepository;
     private final IUserManager userManager;
-    public AuthService(IAuthRepository repository,IUserManager userManager) {
+    private final JwtTokenManager tokenManager;
+    public AuthService(IAuthRepository repository,IUserManager userManager,JwtTokenManager tokenManager) {
         super(repository);
         this.authRepository=repository;
         this.userManager=userManager;
+        this.tokenManager=tokenManager;
     }
 
     public RegisterResponseDto register(RegisterRequestDto dto){
         Auth auth= IAuthMapper.INSTANCE.toAuth(dto);//mapper ile dto yu auth a çevirip kaydettik
 
-        if(userIsExist(dto.getNamesurname())){
+        if(userIsExist(dto.getUsername())){
             throw new AuthServiceException(ErrorType.LOGIN_ERROR_USERNAME_DUPLICATE);
         }else {
             if (dto.getAdmincode()!=null&&dto.getAdmincode().equals("Admin")){
@@ -47,7 +50,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
                 userManager.createUser(NewCreateUserDto.builder()
                                 .authid(auth.getId())
                                 .email(auth.getEmail())
-                                .username(auth.getNamesurname())
+                                .username(auth.getUsername())
                                 .build());
                         return IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
             }catch (Exception e){
@@ -55,15 +58,18 @@ public class AuthService extends ServiceManager<Auth,Long> {
             }
         }
     }
-    public boolean userIsExist(String namesurname){
+    public boolean userIsExist(String username){
 
-        return authRepository.existUsername(namesurname);
+        return authRepository.existUsername(username);
     }
 
     public Optional<LoginResponseDto> login (LoginRequestDto dto){
         Optional<Auth> auth=authRepository.findOptionalByEmailAndPassword(dto.getEmail(),dto.getPassword());
         if (auth.isPresent()){
-            return Optional.of(IAuthMapper.INSTANCE.toLoginResponseDto(auth.get()));
+            String token = tokenManager.createToken(auth.get().getId());
+    LoginResponseDto loginResponseDto=IAuthMapper.INSTANCE.toLoginResponseDto(auth.get());
+    loginResponseDto.setToken(token);
+            return Optional.of(loginResponseDto);
         }else{
             throw new AuthServiceException(ErrorType.LOGIN_ERROR_WRONG);
 
@@ -73,14 +79,15 @@ public class AuthService extends ServiceManager<Auth,Long> {
 
         Optional<Auth> auth=authRepository.findById(dto.getId());
         if (auth.isEmpty()){
-            throw  new AuthServiceException(ErrorType.USER_NOT_FOUND);
+            throw new AuthServiceException(ErrorType.USER_NOT_FOUND);
         }
         if (auth.get().getActivatedCode().equals(dto.getActivatedCode())){
             auth.get().setStatus(Status.ACTIVE);
+            userManager.activetedUser(dto);
             save(auth.get());
             return true;
         }
-        throw  new AuthServiceException(ErrorType.INVALID_ACTIVATE_CODE);
+        throw new AuthServiceException(ErrorType.INVALID_ACTIVATE_CODE);
     }
 }
 

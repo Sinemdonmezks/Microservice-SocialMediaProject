@@ -1,17 +1,15 @@
-package com.sinem.dto.response;
+package com.sinem.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Builder
-public class RegisterResponseDto {
-
-    private  Long id;
-    private String  username;
+public class ActivateRequestDto {
+    private Long id;
     private String activatedCode;
 }

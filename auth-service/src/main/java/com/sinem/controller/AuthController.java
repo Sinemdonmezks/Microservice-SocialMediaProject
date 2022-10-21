@@ -36,4 +36,6 @@ public ResponseEntity<Boolean> activateStatus(@RequestBody ActivateRequestDto dt
        return ResponseEntity.ok(authService.activateStatus(dto));
 
 }
+
+
 }

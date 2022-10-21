@@ -5,8 +5,8 @@ ext{
             mapstruct               : "1.5.2.Final",
             postgresql              : "42.5.0",
             swagger                 : "1.6.12",
-            springCloud              : "3.1.4"
-
+            springCloud              : "3.1.4",
+            auth0                   : "4.1.0"
 
     ]
 
@@ -20,7 +20,8 @@ ext{
             lombokMapstructBinding     : "org.projectlombok:lombok-mapstruct-binding:0.2.0",
             springBootValidation     : "org.springframework.boot:spring-boot-starter-validation:$versions.springBoot",
             springOpenFeign            : "org.springframework.cloud:spring-cloud-starter-openfeign:$versions.springCloud",
-            swaggerui               : "org.springdoc:springdoc-openapi-ui:$versions.swagger"
+            swaggerui               : "org.springdoc:springdoc-openapi-ui:$versions.swagger",
+            auth0                   : "com.auth0:java-jwt:$versions.auth0",
 
     ]
 }

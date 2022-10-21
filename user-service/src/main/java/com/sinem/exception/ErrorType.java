@@ -14,6 +14,8 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 public enum ErrorType {
     INTERNAL_ERROR(2000, "Internal Server Error", INTERNAL_SERVER_ERROR),
     BAD_REQUEST_ERROR(2001, "Invalid Parameter Error", BAD_REQUEST),
+    GECERSIZ_TOKEN(2002,"Token bilgisi geçersizdir.", INTERNAL_SERVER_ERROR),
+
     LOGIN_ERROR_WRONG(1000, "Kullanıcı adı yada şifre hatalı", INTERNAL_SERVER_ERROR),
     LOGIN_ERROR_REQUIRED_PASSWORD(1001, "Şifre gereksinimleri karşılamıyor, geçerli bir şifre giriniz", INTERNAL_SERVER_ERROR),
     LOGIN_ERROR_USERNAME_ERROR(1002, "Geçerli bir kullanıcı adı giriniz. ", INTERNAL_SERVER_ERROR),

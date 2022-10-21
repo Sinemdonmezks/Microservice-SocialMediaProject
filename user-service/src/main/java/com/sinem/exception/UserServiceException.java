@@ -3,15 +3,15 @@ package com.sinem.exception;
 import lombok.Getter;
 
 @Getter
-public class AuthServiceException extends RuntimeException{
+public class UserServiceException extends RuntimeException{
     private final ErrorType errorType;
 
-    public AuthServiceException(ErrorType errorType){
+    public UserServiceException(ErrorType errorType){
         super(errorType.getMessage());
         this.errorType = errorType;
     }
 
-    public AuthServiceException(ErrorType errorType, String message){
+    public UserServiceException(ErrorType errorType, String message){
         super(message);
         this.errorType = errorType;
     }

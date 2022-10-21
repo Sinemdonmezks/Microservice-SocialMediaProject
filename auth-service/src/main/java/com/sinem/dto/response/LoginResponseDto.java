@@ -16,9 +16,11 @@ import javax.validation.constraints.Size;
 @Builder
 public class LoginResponseDto {
     private Long id;
-    private String namesurname;
+    private String username;
     private String email;
     private Roles role;
+    private String token;
+
 
 
 }

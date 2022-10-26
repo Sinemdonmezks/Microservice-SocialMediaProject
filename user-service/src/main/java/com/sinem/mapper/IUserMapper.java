@@ -1,8 +1,9 @@
 package com.sinem.mapper;
 
-import com.sinem.dto.ActivateRequestDto;
-import com.sinem.dto.NewCreateUserDto;
-import com.sinem.dto.UpdateRequestDto;
+import com.sinem.dto.request.ActivateRequestDto;
+import com.sinem.dto.request.NewCreateUserDto;
+import com.sinem.dto.request.UpdateRequestDto;
+import com.sinem.dto.response.UserProfileRedisResponseDto;
 import com.sinem.repository.entity.UserProfile;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -15,5 +16,6 @@ public interface IUserMapper {
     UserProfile toUserProfile(final NewCreateUserDto toNewCreateUserDto);
     UserProfile toUserProfile(final ActivateRequestDto dto);
     UserProfile toUserProfile(final UpdateRequestDto dto);
-
+    UserProfile toUserProfile(final UserProfileRedisResponseDto dto);
+    UserProfileRedisResponseDto toUserProfileRedisResponseDto (final UserProfile profile);
 }

@@ -12,8 +12,13 @@
         <module name="SocialMediaProject.auth-service.main" />
         <module name="SocialMediaProject.config-server-git.main" />
         <module name="SocialMediaProject.user-service.main" />
-        <module name="SocialMediaProject.config-server.main" />
         <module name="SocialMediaProject.main" />
+        <module name="SocialMediaProject.api-gateway-service.main" />
+        <module name="com.sinem.SocialMediaProject.api-gateway-service.src.main" />
+        <module name="SocialMediaProject.api-gateway-service.src.main.main" />
+        <module name="SocialMediaProject.elastic-service.main" />
+        <module name="SocialMediaProject.config-server.main" />
+        <module name="SocialMediaProject.api-gateway-service.src.main.untitled.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />

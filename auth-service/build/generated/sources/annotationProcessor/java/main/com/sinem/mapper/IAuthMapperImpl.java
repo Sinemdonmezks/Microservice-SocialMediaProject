@@ -6,13 +6,14 @@ import com.sinem.dto.request.LoginRequestDto;
 import com.sinem.dto.request.RegisterRequestDto;
 import com.sinem.dto.response.LoginResponseDto;
 import com.sinem.dto.response.RegisterResponseDto;
+import com.sinem.dto.response.RoleResponseDto;
 import com.sinem.repository.entity.Auth;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-10-21T14:13:43+0300",
+    date = "2022-10-26T16:44:50+0300",
     comments = "version: 1.5.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.4.1 (Eclipse Adoptium)"
 )
 @Component
@@ -178,5 +179,20 @@ public class IAuthMapperImpl implements IAuthMapper {
         auth.email( dto.getEmail() );
 
         return auth.build();
+    }
+
+    @Override
+    public RoleResponseDto toRoleResponseDto(Auth auth) {
+        if ( auth == null ) {
+            return null;
+        }
+
+        RoleResponseDto.RoleResponseDtoBuilder roleResponseDto = RoleResponseDto.builder();
+
+        roleResponseDto.id( auth.getId() );
+        roleResponseDto.username( auth.getUsername() );
+        roleResponseDto.role( auth.getRole() );
+
+        return roleResponseDto.build();
     }
 }

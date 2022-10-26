@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.lang.reflect.Type;
 
 @Data
@@ -16,7 +17,9 @@ import java.lang.reflect.Type;
 @Builder
 @Table(name="tbluserprofile")
 @Entity
-public class UserProfile {
+
+
+public class UserProfile implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

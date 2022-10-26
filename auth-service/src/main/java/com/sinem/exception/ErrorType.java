@@ -23,7 +23,8 @@ public enum ErrorType {
     USER_NOT_FOUND(1004, "Kullanıcı bulunamadı", INTERNAL_SERVER_ERROR),
     USER_NOT_CREATED(1005, "Kullanıcı kaydedilemedi", INTERNAL_SERVER_ERROR),
     INVALID_ACTIVATE_CODE(1007,"activated code bulunamadı.",INTERNAL_SERVER_ERROR),
-    USERNAME_DUPLICATE(1006, "hata",INTERNAL_SERVER_ERROR );
+    USERNAME_DUPLICATE(1006, "hata",INTERNAL_SERVER_ERROR ),
+    ROLE_NOT_FOUND(1010,"role bulunamadı",INTERNAL_SERVER_ERROR);
 
 
     private int code;

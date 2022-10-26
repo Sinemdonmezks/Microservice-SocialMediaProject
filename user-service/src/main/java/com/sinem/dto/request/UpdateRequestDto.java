@@ -1,4 +1,4 @@
-package com.sinem.dto;
+package com.sinem.dto.request;
 
 import com.sinem.repository.enums.Status;
 import lombok.AllArgsConstructor;

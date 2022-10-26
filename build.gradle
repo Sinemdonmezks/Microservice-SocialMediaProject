@@ -53,7 +53,8 @@ allprojects{
         implementation libs.swaggerui
         implementation libs.springOpenFeign
         implementation libs.auth0
-
+        implementation libs.springCloudStaterSleuth
+        implementation libs.springCloudSleuthZipkin
     }
 }
 /**

@@ -1,4 +1,4 @@
-package com.sinem.dto;
+package com.sinem.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class ActivateRequestDto {
-    private Long id;
-    private String activatedCode;
+public class NewCreateUserDto {
+    String username;
+    String email;
+    Long authid;
 }

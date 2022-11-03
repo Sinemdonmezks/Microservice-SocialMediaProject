@@ -1,5 +1,6 @@
 package com.sinem.repository.entity;
 
+import com.sinem.repository.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,11 +15,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder
 @Document(indexName = "userprofile")
-
-
 public class UserProfile implements Serializable {
     @Id
-    Long id;
+    String id;
     Long authid;
     String username;
     String name;
@@ -29,5 +28,5 @@ public class UserProfile implements Serializable {
     String about;
     Long created;
     Long updated;
-
+    Status status;
 }

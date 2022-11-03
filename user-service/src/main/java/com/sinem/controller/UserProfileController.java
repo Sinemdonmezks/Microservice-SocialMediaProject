@@ -5,11 +5,14 @@ import com.sinem.dto.request.NewCreateUserDto;
 import com.sinem.dto.request.UpdateRequestDto;
 import com.sinem.dto.response.RoleResponseDto;
 import com.sinem.dto.response.UserProfileRedisResponseDto;
+import com.sinem.dto.response.UserProfileResponseDto;
 import com.sinem.exception.UserServiceException;
 import com.sinem.exception.ErrorType;
+import com.sinem.mapper.IUserMapper;
 import com.sinem.repository.entity.UserProfile;
 import com.sinem.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +41,7 @@ try{
     userProfileService.createUser(dto);
     return ResponseEntity.ok(true);
 }catch (Exception e){
+    e.printStackTrace();
     throw  new UserServiceException(ErrorType.INVALID_ACTIVATE_CODE);
 
 }
@@ -71,8 +75,8 @@ try{
     }
 
     @GetMapping(GETALL)
-    public ResponseEntity<List<UserProfile>> findAll(){
-        return ResponseEntity.ok(userProfileService.findAll());
+    public ResponseEntity<List<UserProfileResponseDto>> findAll(){
+        return ResponseEntity.ok(IUserMapper.INSTANCE.toUserProfileResponseDto(userProfileService.findAll()));
     }
 
 @GetMapping("/findbyusername/{username}")
@@ -96,4 +100,9 @@ public ResponseEntity<UserProfileRedisResponseDto> findByUsername(@PathVariable 
     public ResponseEntity<List<RoleResponseDto>> findAllByRole(String role){
        return ResponseEntity.ok(userProfileService.findByRole(role));
     }
+    @GetMapping("/findbypageable")
+    public ResponseEntity<Page<UserProfile>> getAllPage(int pageSize, int pageNumber, String parameter, String direction){
+        return ResponseEntity.ok(userProfileService.getAllPage(pageSize,pageNumber,parameter,direction));
+    }
+
 }

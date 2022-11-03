@@ -8,6 +8,7 @@ import com.sinem.dto.response.UserProfileRedisResponseDto;
 import com.sinem.exception.UserServiceException;
 import com.sinem.exception.ErrorType;
 import com.sinem.manager.IAuthManager;
+import com.sinem.manager.IElasticManager;
 import com.sinem.mapper.IUserMapper;
 import com.sinem.repository.IUserProfileRepository;
 import com.sinem.repository.entity.UserProfile;
@@ -17,36 +18,43 @@ import com.sinem.utility.ServiceManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserProfileService extends ServiceManager<UserProfile,Long> {
+public class UserProfileService extends ServiceManager<UserProfile,String > {
     private final IUserProfileRepository userProfileRepository;
     private final JwtTokenManager tokenManager;
     private final IAuthManager authManager;
     @Autowired
     private final CacheManager cacheManager;
-
+    private final IElasticManager elasticManager;
     public UserProfileService(IUserProfileRepository userProfileRepository,
                               JwtTokenManager tokenManager,CacheManager cacheManager,
-                              IAuthManager authManager) {
+                              IAuthManager authManager,IElasticManager elasticManager) {
         super(userProfileRepository);
         this.userProfileRepository = userProfileRepository;
         this.tokenManager = tokenManager;
         this.cacheManager=cacheManager;
         this.authManager=authManager;
+        this.elasticManager=elasticManager;
     }
 
     public UserProfile createUser(NewCreateUserDto dto) {
-        return userProfileRepository.save(IUserMapper.INSTANCE.toUserProfile(dto));
+        UserProfile userProfile=save(IUserMapper.INSTANCE.toUserProfile(dto));
+      elasticManager.createUser(IUserMapper.INSTANCE.toUserProfileResponseDto(userProfile));
+        return userProfile;
 
     }
 
     public boolean activatedUser(ActivateRequestDto dto) {
-        Optional<UserProfile> userProfile = userProfileRepository.findOptionalByAuthid(dto.getId());
+        Optional<UserProfile> userProfile = userProfileRepository.findOptionalByAuthid(Long.valueOf(dto.getId()));
         if (userProfile.isPresent()) {
             userProfile.get().setStatus(Status.ACTIVE);
             save(userProfile.get());
@@ -80,6 +88,8 @@ public class UserProfileService extends ServiceManager<UserProfile,Long> {
                 userProfileDb.get().setUsername(dto.getUsername());
                 userProfileDb.get().setPhone(dto.getPhone());
                 userProfileDb.get().setPhoto(dto.getPhoto());
+                userProfileDb.get().setUpdated(System.currentTimeMillis());
+                elasticManager.update(IUserMapper.INSTANCE.toUserProfileResponseDto(userProfileDb.get()));
                 save(userProfileDb.get());
                 return true;
             } else {
@@ -136,5 +146,11 @@ public class UserProfileService extends ServiceManager<UserProfile,Long> {
     public List<RoleResponseDto> findByRole(String roles) {
 
         return authManager.findAllByRole(roles).getBody();
+    }
+
+    public Page<UserProfile> getAllPage(int pageSize, int currentPageNumber, String sortParameter, String sortDirection){
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection),sortParameter);
+        Pageable pageable = PageRequest.of(currentPageNumber,pageSize,sort);
+        return userProfileRepository.findAll(pageable);
     }
 }

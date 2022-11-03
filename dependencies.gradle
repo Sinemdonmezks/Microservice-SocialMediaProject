@@ -6,8 +6,9 @@ ext{
             postgresql              : "42.5.0",
             swagger                 : "1.6.12",
             springCloud              : "3.1.4",
-            auth0                   : "4.1.0"
-
+            auth0                   : "4.1.0",
+            graphql                 : "13.0.0",
+            graphiql                : "11.1.0"
     ]
 
     libs = [
@@ -38,8 +39,18 @@ ext{
             springDataRedis         : "org.springframework.boot:spring-boot-starter-data-redis:$versions.springBoot",
             // Elastic Search için gerekli data bağımlılıkları
             springDataElasticSearch : "org.springframework.boot:spring-boot-starter-data-elasticsearch:$versions.springBoot",
+            //Graphql için bağımlılıklar
+            springGraphQL           : "com.graphql-java-kickstart:graphql-spring-boot-starter:$versions.graphql",
+            springGraphiQLUI          : "com.graphql-java-kickstart:graphiql-spring-boot-starter:$versions.graphiql",
+            springGraphQLTools      : "com.graphql-java-kickstart:graphql-java-tools:$versions.graphql",
 
+//mongodb
+            springBootDataMongodb   : "org.springframework.boot:spring-boot-starter-data-mongodb:$versions.springBoot",
+//spring boot mail sender
+            springBootMailSender    : "org.springframework.boot:spring-boot-starter-mail:$versions.springBoot",
 
+// rabbit mq
+            springBootRabbitMQ      : "org.springframework.boot:spring-boot-starter-amqp:$versions.springBoot",
 
 
     ]

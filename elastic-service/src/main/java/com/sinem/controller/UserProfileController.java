@@ -1,12 +1,12 @@
 package com.sinem.controller;
 
+import com.sinem.dto.response.UserProfileResponseDto;
+import com.sinem.mapper.IUserMapper;
 import com.sinem.repository.entity.UserProfile;
 import com.sinem.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.sinem.constants.ApiUrls.*;
 @RestController
@@ -19,4 +19,17 @@ public class UserProfileController {
     public ResponseEntity<Iterable<UserProfile>> getall(){
         return ResponseEntity.ok(userProfileService.findAll());
     }
+    @PostMapping(CREATE)
+    public ResponseEntity<UserProfile> createUser(@RequestBody UserProfileResponseDto userProfiledto){
+        return ResponseEntity.ok(userProfileService
+                .save(IUserMapper.INSTANCE.toUserProfile(userProfiledto)));
+    }
+
+    @PutMapping(UPDATE)
+    public ResponseEntity<UserProfile> update(@RequestBody UserProfileResponseDto userProfiledto){
+        return ResponseEntity.ok(userProfileService
+                .save(IUserMapper.INSTANCE.toUserProfile(userProfiledto)));
+    }
+
+
 }

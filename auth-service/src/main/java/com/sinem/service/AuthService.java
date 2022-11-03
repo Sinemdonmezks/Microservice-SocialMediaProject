@@ -11,6 +11,7 @@ import com.sinem.exception.AuthServiceException;
 import com.sinem.exception.ErrorType;
 import com.sinem.manager.IUserManager;
 import com.sinem.mapper.IAuthMapper;
+import com.sinem.rabbitmq.procuder.ActivatedCodeProcedure;
 import com.sinem.repository.IAuthRepository;
 import com.sinem.repository.entity.Auth;
 import com.sinem.repository.enums.Roles;
@@ -21,6 +22,7 @@ import com.sinem.utility.ServiceManager;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,14 +36,18 @@ public class AuthService extends ServiceManager<Auth,Long> {
     private final IUserManager userManager;
     private final JwtTokenManager tokenManager;
     private final CacheManager cacheManager;
-    public AuthService(IAuthRepository repository,IUserManager userManager,JwtTokenManager tokenManager,CacheManager cacheManager) {
+
+    private final ActivatedCodeProcedure procedure;
+
+    public AuthService(IAuthRepository repository,IUserManager userManager,JwtTokenManager tokenManager,CacheManager cacheManager,ActivatedCodeProcedure procedure) {
         super(repository);
         this.authRepository=repository;
         this.userManager=userManager;
         this.tokenManager=tokenManager;
         this.cacheManager=cacheManager;
+        this.procedure=procedure;
     }
-
+@Transactional// bu anatasyon sayesinde bir hataya düştüğünde databasede kayıt yapmaz, user-service databaseine kaydetmeyecek
     public RegisterResponseDto register(RegisterRequestDto dto){
         Auth auth= IAuthMapper.INSTANCE.toAuth(dto);//mapper ile dto yu auth a çevirip kaydettik
 
@@ -60,8 +66,13 @@ public class AuthService extends ServiceManager<Auth,Long> {
                                 .email(auth.getEmail())
                                 .username(auth.getUsername())
                                 .build());
+                procedure.sendActivatedCode(com.sinem.rabbitmq.model.ActivateRequestDto.builder()
+                                .email(auth.getEmail())
+                        .activatedCode(auth.getActivatedCode())
+                        .build());
                         return IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
             }catch (Exception e){
+                delete(auth);//burda userservice çalısmazsa auth silinir.ama anatasyonla yapmak daha iyi.
                 throw new AuthServiceException(ErrorType.USER_NOT_CREATED);
             }
         }

@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+
 import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
@@ -14,8 +14,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Builder
 public class UpdateRequestDto {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     String username;
     String name;
     String email;

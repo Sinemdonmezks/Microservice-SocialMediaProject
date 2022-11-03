@@ -2,16 +2,25 @@ server:
   port: 8091
 
 spring:
+  data:
+    mongodb:
+      host: 35.202.170.7
+      port: 14606
+      database: UserDb
+      username: bilgeuser
+      password: "bilge!!**"
   zipkin:
     enabled: true
     base-url: http://localhost:9411
     service:
       name: user-service
-  datasource:
-    username: 'postgres'
-    password: 'root'
-    url: 'jdbc:postgresql://localhost:5432/socialmediauserDB'
-    driver-class-name: org.postgresql.Driver
+  #datasource:
+   # username: 'postgres'
+   # password: 'root'
+   # url: 'jdbc:postgresql://localhost:5432/socialmediauserDB'
+   # driver-class-name: org.postgresql.Driver
+
+
 
   jpa:
     hibernate:
@@ -25,6 +34,7 @@ myredis:
 myapplication:
   feign:
     auth: http://localhost:8092/api/v1
+    elastic: http://localhost:8099/api/v1
 
 #Jwt
 myjwt:

@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class ActivateRequestDto {
     private Long id;
     private String activatedCode;
+    private String email;
 
 }

@@ -6,23 +6,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.lang.reflect.Type;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name="tbluserprofile")
-@Entity
+@Document
 
 
 public class UserProfile implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    String  id;
     Long authid;
     String username;
     String name;
@@ -31,9 +29,9 @@ public class UserProfile implements Serializable {
     String photo;
     String address;
     String about;
-    Long created;
+    @Builder.Default
+    Long created=System.currentTimeMillis();
     Long updated;
-    @Enumerated(EnumType.STRING)
     @Builder.Default
     Status status=Status.PENDING;
 }
